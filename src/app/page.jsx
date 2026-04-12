@@ -1,47 +1,14 @@
+"use client";
 import Image from "next/image";
-import {
-  Home,
-  Route,
-  MessageCircle,
-  Bell,
-  Settings,
-  LogOut,
-  Heart,
-  MessageSquare,
-  Send,
-} from "lucide-react";
+import { Settings, LogOut, Heart, MessageSquare, Send } from "lucide-react";
+import CreatePostModal from "@/components/CreatePostModal";
+import { useState } from "react";
 
 export default function HomePage() {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
   return (
     <div className="w-full min-h-screen bg-gray-100">
-      {/* ================= NAVBAR ================= */}
-
-      <div className="w-full h-16 bg-white border-b flex justify-between items-center px-10">
-        <div className="font-bold text-xl text-indigo-600">CarPool</div>
-
-        <ul className="flex gap-8 font-medium text-gray-700">
-          <li className="flex items-center gap-2 cursor-pointer hover:text-indigo-600">
-            <Home size={18} /> Home
-          </li>
-
-          <li className="flex items-center gap-2 cursor-pointer hover:text-indigo-600">
-            <Route size={18} /> Routes
-          </li>
-
-          <li className="flex items-center gap-2 cursor-pointer hover:text-indigo-600">
-            <MessageCircle size={18} /> Messages
-          </li>
-
-          <li className="flex items-center gap-2 cursor-pointer hover:text-indigo-600">
-            <Bell size={18} /> Notifications
-          </li>
-        </ul>
-
-        <div className="flex items-center gap-2 cursor-pointer text-gray-700 hover:text-red-500">
-          <LogOut size={18} /> Logout
-        </div>
-      </div>
-
       {/* ================= MAIN LAYOUT ================= */}
 
       <section className="flex">
@@ -85,7 +52,7 @@ export default function HomePage() {
         <section className="w-3/4 min-h-screen p-10">
           {/* Create Post */}
 
-          <div className="flex items-center gap-3 bg-white p-4 rounded-lg shadow-sm border">
+          <div className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-sm border">
             <Image
               src="/man.jpeg"
               alt="user"
@@ -94,14 +61,29 @@ export default function HomePage() {
               className="rounded-full"
             />
 
-            <input
-              type="text"
-              placeholder="Share your ride plan..."
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-indigo-500"
-            />
+            <div
+              onClick={() => setOpen(true)}
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-gray-500 cursor-pointer hover:bg-gray-50"
+            >
+              Share your ride plan...
+            </div>
 
-            <Send size={20} className="cursor-pointer text-indigo-600" />
+            {/* Send Icon */}
+            <Send
+              size={20}
+              onClick={() => setOpen(true)}
+              className="cursor-pointer text-indigo-600 hover:scale-110 transition"
+            />
           </div>
+
+          {/* Modal */}
+          {open && (
+            <CreatePostModal
+              setOpen={setOpen}
+              value={value}
+              setValue={setValue}
+            />
+          )}
 
           {/* ================= POST ================= */}
 
