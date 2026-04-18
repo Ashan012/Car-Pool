@@ -3,22 +3,34 @@
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import "react-quill-new/dist/quill.snow.css";
+import axios from "axios";
+import { useAppContext } from "@/context/AppContext";
 
 const ReactQuill = dynamic(() => import("react-quill-new"), {
   ssr: false,
 });
 
 export default function CreatePost() {
+  const { user } = useAppContext();
   const [value, setValue] = useState("");
   const [posts, setPosts] = useState([]);
 
-  const handlePost = () => {
+  const handlePost = async () => {
     if (!value.trim()) return;
+
+    try {
+      await axios.post("/api/add-post", {
+        content: value,
+        owner: user?._id,
+      });
+    } catch (error) {
+      console.error(error);
+    }
 
     const newPost = {
       id: Date.now(),
       content: value,
-      user: "Ashan",
+      owner: user?.username || "Ashan",
       time: new Date().toLocaleString(),
     };
 
@@ -27,58 +39,68 @@ export default function CreatePost() {
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 space-y-6">
-      {/* Create Post Box */}
-      <div className="bg-white shadow-lg rounded-2xl p-4">
-        {/* User */}
-        <div className="flex items-center gap-3 mb-4">
-          <img
-            src="https://i.pravatar.cc/40"
-            className="w-10 h-10 rounded-full"
-          />
-          <h3 className="font-semibold text-gray-800">Ashan</h3>
-        </div>
-
-        {/* Editor Wrapper */}
-        <div className="rounded-xl border border-gray-200 overflow-hidden">
-          <ReactQuill
-            theme="snow"
-            value={value}
-            onChange={setValue}
-            placeholder="What's on your mind, Ashan?"
-            className="custom-quill"
-          />
-        </div>
-
-        {/* Button */}
-        <button
-          onClick={handlePost}
-          className="mt-4 w-full bg-blue-600 hover:bg-blue-700 transition text-white py-2 rounded-xl font-medium"
-        >
-          Post
-        </button>
-      </div>
-
-      {/* Feed */}
-      {posts.map((post) => (
-        <div key={post.id} className="bg-white shadow rounded-2xl p-4">
-          <div className="flex items-center gap-3 mb-2">
+    <div className="min-h-screen bg-slate-50 py-10">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6">
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="flex items-center gap-4 pb-4">
             <img
               src="https://i.pravatar.cc/40"
-              className="w-10 h-10 rounded-full"
+              className="h-12 w-12 rounded-full"
             />
             <div>
-              <h4 className="font-semibold">{post.user}</h4>
-              <p className="text-sm text-gray-500">{post.time}</p>
+              <p className="text-lg font-semibold text-slate-900">
+                {user?.username || "Ashan"}
+              </p>
+              <p className="text-sm text-slate-500">
+                Share a new post with the community.
+              </p>
             </div>
           </div>
 
-          <div
-            className="prose max-w-none"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
+          <div className="rounded-3xl border border-slate-200 bg-slate-50 overflow-hidden">
+            <ReactQuill
+              theme="snow"
+              value={value}
+              onChange={setValue}
+              placeholder="What's on your mind?"
+              className="custom-quill"
+            />
+          </div>
+
+          <button
+            onClick={handlePost}
+            className="mt-4 w-full rounded-3xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700"
+          >
+            Post
+          </button>
         </div>
-      ))}
+
+        <div className="mt-8 space-y-4">
+          {posts.map((post) => (
+            <article
+              key={post.id}
+              className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+            >
+              <div className="flex items-center gap-4 pb-4">
+                <img
+                  src="https://i.pravatar.cc/40"
+                  className="h-12 w-12 rounded-full"
+                />
+                <div>
+                  <p className="text-base font-semibold text-slate-900">
+                    {post.owner}
+                  </p>
+                  <p className="text-sm text-slate-500">{post.time}</p>
+                </div>
+              </div>
+              <div
+                className="prose max-w-none text-slate-700"
+                dangerouslySetInnerHTML={{ __html: post.content }}
+              />
+            </article>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

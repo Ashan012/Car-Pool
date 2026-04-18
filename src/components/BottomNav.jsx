@@ -7,42 +7,46 @@ export default function BottomNav() {
   const router = useRouter();
 
   return (
-    <div className="md:hidden fixed bottom-0 left-0 w-full bg-white border-t shadow-lg">
-      <div className="flex justify-around items-center h-16 text-gray-600">
-        <div
+    <div className="md:hidden fixed bottom-0 left-0 w-full border-t border-slate-200 bg-white/95 shadow-xl backdrop-blur">
+      <div className="flex items-center justify-around h-20 px-3 text-slate-600">
+        <button
           onClick={() => router.push("/")}
-          className="flex flex-col items-center text-xs cursor-pointer hover:text-indigo-600"
+          className="flex flex-col items-center text-[11px] font-medium uppercase tracking-[0.08em] transition hover:text-indigo-600"
         >
-          <Home size={22} />
+          <Home size={20} />
           Home
-        </div>
+        </button>
 
-        <div
+        <button
           onClick={() => router.push("/routes")}
-          className="flex flex-col items-center text-xs cursor-pointer hover:text-indigo-600"
+          className="flex flex-col items-center text-[11px] font-medium uppercase tracking-[0.08em] transition hover:text-indigo-600"
         >
-          <Route size={22} />
+          <Route size={20} />
           Routes
-        </div>
+        </button>
 
-        {/* Center Button */}
-
-        <div
+        <button
           onClick={() => router.push("/add-route")}
-          className="bg-indigo-600 text-white p-3 rounded-full -mt-8 shadow-lg cursor-pointer"
+          className="flex items-center justify-center rounded-full bg-indigo-600 p-3 text-white shadow-xl transition hover:bg-indigo-700"
         >
-          <PlusCircle size={26} />
-        </div>
+          <PlusCircle size={24} />
+        </button>
 
-        <div className="flex flex-col items-center text-xs cursor-pointer hover:text-indigo-600">
-          <MessageCircle size={22} />
+        <button
+          onClick={() => router.push("/message")}
+          className="flex flex-col items-center text-[11px] font-medium uppercase tracking-[0.08em] transition hover:text-indigo-600"
+        >
+          <MessageCircle size={20} />
           Chat
-        </div>
+        </button>
 
-        <div className="flex flex-col items-center text-xs cursor-pointer hover:text-indigo-600">
-          <User size={22} />
+        <button
+          onClick={() => router.push("/sign-in")}
+          className="flex flex-col items-center text-[11px] font-medium uppercase tracking-[0.08em] transition hover:text-indigo-600"
+        >
+          <User size={20} />
           Profile
-        </div>
+        </button>
       </div>
     </div>
   );

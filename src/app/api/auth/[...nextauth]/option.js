@@ -1,9 +1,8 @@
-import { dbconnect } from "@/lib/dbconnect";
-import UserModel from "@/models/users.model";
-import { ApiError } from "@/utils/ApiError";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import { dbConnect } from "@/lib/dbconnect";
+import UserModel from "@/models/user.model.js";
+import { ApiError } from "@/lib/ApiError";
 
 export const authOptions = {
   providers: [
@@ -15,7 +14,7 @@ export const authOptions = {
       },
 
       async authorize(credentials) {
-        await dbconnect();
+        await dbConnect();
 
         try {
           const user = await UserModel.findOne({
@@ -47,9 +46,7 @@ export const authOptions = {
       if (user) {
         token._id = user._id.toString();
         token.username = user.username;
-        token.fullName = user.fullName;
         token.email = user.email;
-        token.avatar = user.avatar;
       }
       return token;
     },
@@ -57,9 +54,7 @@ export const authOptions = {
       if (token) {
         session._id = token._id;
         session.username = token.username;
-        session.fullName = token.fullName;
         session.email = token.email;
-        session.avatar = token.avatar;
       }
       return session;
     },

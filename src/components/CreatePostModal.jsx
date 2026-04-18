@@ -1,5 +1,7 @@
 "use client";
 
+import { useAppContext } from "@/context/AppContext";
+import axios from "axios";
 import dynamic from "next/dynamic";
 import "react-quill-new/dist/quill.snow.css";
 
@@ -8,49 +10,71 @@ const ReactQuill = dynamic(() => import("react-quill-new"), {
 });
 
 export default function CreatePostModal({ setOpen, value, setValue }) {
-  const handlePost = () => {
+  const { user } = useAppContext();
+
+  const handlePost = async () => {
     if (!value.trim()) return;
 
-    console.log(value); // yahan DB ya state mein save karna
+    try {
+      await axios.post("/api/add-post", {
+        content: value,
+        owner: user?._id,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+
     setOpen(false);
     setValue("");
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      {/* Modal Box */}
-      <div className="bg-white w-full max-w-lg rounded-2xl shadow-xl">
-        {/* Header */}
-        <div className="flex justify-between items-center p-4 border-b">
-          <h2 className="font-semibold text-lg">Create Post</h2>
-          <button onClick={() => setOpen(false)}>✖</button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 px-4">
+      <div className="w-full max-w-2xl overflow-hidden rounded-4xl border border-slate-200 bg-white shadow-2xl">
+        <div className="flex items-center justify-between border-b border-slate-200 px-6 py-5">
+          <div>
+            <p className="text-sm uppercase tracking-[0.24em] text-indigo-600">
+              Create post
+            </p>
+            <h2 className="mt-2 text-xl font-semibold text-slate-900">
+              Share your latest ride
+            </h2>
+          </div>
+          <button
+            onClick={() => setOpen(false)}
+            className="rounded-full border border-slate-200 px-3 py-2 text-slate-600 transition hover:bg-slate-100"
+          >
+            ✕
+          </button>
         </div>
 
-        {/* User */}
-        <div className="flex items-center gap-3 p-4">
-          <img
-            src="https://i.pravatar.cc/40"
-            className="w-10 h-10 rounded-full"
-          />
-          <h3 className="font-medium">Ashan</h3>
-        </div>
+        <div className="px-6 py-5">
+          <div className="mb-5 flex items-center gap-4">
+            <img
+              src="https://i.pravatar.cc/40"
+              className="h-12 w-12 rounded-full"
+            />
+            <div>
+              <p className="font-semibold text-slate-900">
+                {user?.username || "Ashan"}
+              </p>
+              <p className="text-sm text-slate-500">What's your ride plan?</p>
+            </div>
+          </div>
 
-        {/* Editor */}
-        <div className="px-4 pb-2">
-          <ReactQuill
-            theme="snow"
-            value={value}
-            onChange={setValue}
-            placeholder="What's on your mind?"
-            className="custom-quill"
-          />
-        </div>
+          <div className="rounded-3xl border border-slate-200 bg-slate-50 overflow-hidden">
+            <ReactQuill
+              theme="snow"
+              value={value}
+              onChange={setValue}
+              placeholder="Tell your community about the route..."
+              className="custom-quill"
+            />
+          </div>
 
-        {/* Button */}
-        <div className="p-4">
           <button
             onClick={handlePost}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl"
+            className="mt-6 w-full rounded-3xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700"
           >
             Post
           </button>

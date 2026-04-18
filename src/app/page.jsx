@@ -7,131 +7,171 @@ import { useState } from "react";
 export default function HomePage() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
+
   return (
-    <div className="w-full min-h-screen bg-gray-100">
-      {/* ================= MAIN LAYOUT ================= */}
-
-      <section className="flex">
-        {/* ================= SIDEBAR ================= */}
-
-        <section className="w-1/4 h-[92vh] bg-white border-r flex flex-col justify-between p-6">
-          {/* Profile */}
-
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <div className="flex items-center gap-3">
-              <Image
-                src="/man.jpeg"
-                alt="user"
-                width={40}
-                height={40}
-                className="rounded-full"
-              />
-
-              <div>
-                <p className="font-semibold text-gray-800">Ashan Jameel</p>
-                <p className="text-sm text-gray-500">Driver</p>
+    <div className="min-h-screen bg-slate-50 py-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-6 xl:grid-cols-[300px_1fr]">
+          <aside className="space-y-6">
+            <div className="rounded-3xl bg-white border border-slate-200 p-6 shadow-sm">
+              <div className="flex items-center gap-4">
+                <Image
+                  src="/man.jpeg"
+                  alt="user"
+                  width={56}
+                  height={56}
+                  className="rounded-full"
+                />
+                <div>
+                  <p className="text-lg font-semibold text-slate-900">
+                    Ashan Jameel
+                  </p>
+                  <p className="text-sm text-slate-500">Driver</p>
+                </div>
               </div>
-            </div>
-          </div>
 
-          {/* Bottom Menu */}
-
-          <div className="space-y-4 text-gray-700">
-            <p className="flex items-center gap-2 cursor-pointer hover:text-indigo-600">
-              <Settings size={18} /> Settings
-            </p>
-
-            <p className="flex items-center gap-2 cursor-pointer hover:text-red-500">
-              <LogOut size={18} /> Logout
-            </p>
-          </div>
-        </section>
-
-        {/* ================= MAIN FEED ================= */}
-
-        <section className="w-3/4 min-h-screen p-10">
-          {/* Create Post */}
-
-          <div className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-sm border">
-            <Image
-              src="/man.jpeg"
-              alt="user"
-              width={40}
-              height={40}
-              className="rounded-full"
-            />
-
-            <div
-              onClick={() => setOpen(true)}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-gray-500 cursor-pointer hover:bg-gray-50"
-            >
-              Share your ride plan...
-            </div>
-
-            {/* Send Icon */}
-            <Send
-              size={20}
-              onClick={() => setOpen(true)}
-              className="cursor-pointer text-indigo-600 hover:scale-110 transition"
-            />
-          </div>
-
-          {/* Modal */}
-          {open && (
-            <CreatePostModal
-              setOpen={setOpen}
-              value={value}
-              setValue={setValue}
-            />
-          )}
-
-          {/* ================= POST ================= */}
-
-          <div className="mt-10 bg-white p-6 rounded-lg shadow-sm border">
-            {/* Post Header */}
-
-            <div className="flex items-center gap-3">
-              <Image
-                src="/man.jpeg"
-                alt="user"
-                width={40}
-                height={40}
-                className="rounded-full"
-              />
-
-              <div>
-                <h3 className="font-semibold text-gray-800">Kloudxel</h3>
-
-                <p className="text-sm text-gray-500">3 hours ago</p>
+              <div className="mt-6 space-y-3 text-slate-600">
+                <button className="flex w-full items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-left text-sm font-medium text-slate-700 transition hover:bg-slate-100">
+                  <Settings size={18} /> Settings
+                </button>
+                <button className="flex w-full items-center gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-left text-sm font-medium text-slate-700 transition hover:bg-slate-100">
+                  <LogOut size={18} /> Logout
+                </button>
               </div>
             </div>
 
-            {/* Post Content */}
+            <div className="rounded-3xl bg-white border border-slate-200 p-6 shadow-sm">
+              <p className="text-sm uppercase tracking-[0.24em] text-indigo-600">
+                Quick stats
+              </p>
+              <div className="mt-4 space-y-4">
+                <div className="rounded-3xl bg-slate-50 p-4">
+                  <p className="text-sm text-slate-500">Rides shared</p>
+                  <p className="mt-2 text-2xl font-semibold text-slate-900">
+                    14
+                  </p>
+                </div>
+                <div className="rounded-3xl bg-slate-50 p-4">
+                  <p className="text-sm text-slate-500">Passengers helped</p>
+                  <p className="mt-2 text-2xl font-semibold text-slate-900">
+                    42
+                  </p>
+                </div>
+              </div>
+            </div>
+          </aside>
 
-            <div className="mt-4 text-gray-700 leading-relaxed">
-              <p>🚗 Route: Surjani → Shahrah e Faisal</p>
+          <main className="space-y-6">
+            <div className="rounded-3xl bg-white border border-slate-200 p-6 shadow-sm">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm font-semibold uppercase tracking-[0.24em] text-indigo-600">
+                    Create ride
+                  </p>
+                  <h1 className="mt-2 text-2xl font-semibold text-slate-900">
+                    Share your ride plan
+                  </h1>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">
+                    Publish a ride and let others join your trip easily.
+                  </p>
+                </div>
 
-              <p>🕒 Time: 8:30 AM</p>
-
-              <p>💺 Seats Available: 3</p>
-
-              <p>💰 Price: 200 PKR</p>
+                <button
+                  onClick={() => setOpen(true)}
+                  className="inline-flex items-center gap-2 rounded-full bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700"
+                >
+                  <Send size={18} /> Create Post
+                </button>
+              </div>
             </div>
 
-            {/* Post Reaction */}
+            {open && (
+              <CreatePostModal
+                setOpen={setOpen}
+                value={value}
+                setValue={setValue}
+              />
+            )}
 
-            <div className="mt-5 flex gap-6 text-gray-600">
-              <button className="flex items-center gap-2 hover:text-indigo-600">
-                <Heart size={18} /> Like
-              </button>
+            <section className="rounded-3xl bg-white border border-slate-200 p-6 shadow-sm">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm text-slate-500">Latest ride post</p>
+                  <h2 className="text-xl font-semibold text-slate-900">
+                    Surjani to Shahrah e Faisal
+                  </h2>
+                </div>
+                <button className="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:text-indigo-600">
+                  View all rides
+                </button>
+              </div>
 
-              <button className="flex items-center gap-2 hover:text-indigo-600">
-                <MessageSquare size={18} /> Comment
-              </button>
-            </div>
-          </div>
-        </section>
-      </section>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                <article className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-medium text-slate-700">
+                        Driver
+                      </p>
+                      <p className="mt-1 text-lg font-semibold text-slate-900">
+                        Kloudxel
+                      </p>
+                    </div>
+                    <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                      3h ago
+                    </span>
+                  </div>
+                  <div className="mt-5 space-y-2 text-slate-600">
+                    <p>🚗 Route: Surjani → Shahrah e Faisal</p>
+                    <p>🕒 Time: 8:30 AM</p>
+                    <p>💺 Seats: 3</p>
+                    <p className="text-lg font-semibold text-emerald-600">
+                      200 PKR
+                    </p>
+                  </div>
+                  <div className="mt-5 flex gap-3 text-slate-700">
+                    <button className="rounded-2xl bg-white px-4 py-2 text-sm font-medium border border-slate-200 hover:bg-slate-100">
+                      Like
+                    </button>
+                    <button className="rounded-2xl bg-white px-4 py-2 text-sm font-medium border border-slate-200 hover:bg-slate-100">
+                      Comment
+                    </button>
+                  </div>
+                </article>
+
+                <article className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-medium text-slate-700">
+                        Driver
+                      </p>
+                      <p className="mt-1 text-lg font-semibold text-slate-900">
+                        Ashan Jameel
+                      </p>
+                    </div>
+                    <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                      1d ago
+                    </span>
+                  </div>
+                  <div className="mt-5 space-y-2 text-slate-600">
+                    <p>🏍 Vehicle: Bike</p>
+                    <p>📍 Start: Surjani</p>
+                    <p>📍 End: Malir</p>
+                    <p className="text-lg font-semibold text-emerald-600">
+                      150 PKR
+                    </p>
+                  </div>
+                  <div className="mt-5 flex gap-3 text-slate-700">
+                    <button className="rounded-2xl bg-white px-4 py-2 text-sm font-medium border border-slate-200 hover:bg-slate-100">
+                      View Ride
+                    </button>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </main>
+        </div>
+      </div>
     </div>
   );
 }

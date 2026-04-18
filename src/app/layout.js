@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import BottomNav from "@/components/BottomNav";
+import { AppContextProvider } from "@/context/AppContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,19 +25,18 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        {/* Desktop Navbar */}
-        <div>
+      <body className="h-full min-h-screen flex flex-col">
+        <AppContextProvider>
           <Navbar />
-        </div>
 
-        {/* Page Content */}
-        <main className="pb-20">{children}</main>
+          <main className="flex-1 min-h-0 pb-24 md:pb-20 overflow-hidden">
+            {children}
+          </main>
 
-        {/* Mobile Bottom Navigation */}
-        <div className="md:hidden">
-          <BottomNav />
-        </div>
+          <div className="md:hidden">
+            <BottomNav />
+          </div>
+        </AppContextProvider>
       </body>
     </html>
   );

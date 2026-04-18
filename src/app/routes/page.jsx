@@ -1,7 +1,20 @@
+"use client";
 import Image from "next/image";
 import { MessageSquare } from "lucide-react";
+import { useEffect } from "react";
+import axios from "axios";
 
 function Routes() {
+  const fetchRoutes = async () => {
+    const { data } = await axios.get(`/api/get-route`);
+    if (data) {
+      console.log(data.routes);
+    }
+  };
+  useEffect(() => {
+    fetchRoutes();
+  }, []);
+
   return (
     <div className="max-w-6xl mx-auto px-6 py-10">
       {/* Search Section */}

@@ -1,79 +1,54 @@
 "use client";
-import React, { useState } from "react";
-import {
-  Home,
-  Route,
-  MessageCircle,
-  Bell,
-  LogOut,
-  Plus,
-  Menu,
-  X,
-} from "lucide-react";
-import { useRouter } from "next/navigation";
+import { Home, Route, MessageCircle, Bell, LogOut, Plus, LogIn } from "lucide-react";
+import { useAppContext } from "@/context/AppContext";
 
 function Navbar() {
-  const router = useRouter();
-  const [open, setOpen] = useState(false);
+  const { user, handleLogout, router } = useAppContext();
 
   return (
-    <div className="w-full bg-white border-b">
-      {/* Top Navbar */}
-
-      <div className="h-16 flex justify-between items-center px-6">
-        {/* Logo */}
-
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <div
-          className="font-bold text-xl text-indigo-600 cursor-pointer"
+          className="cursor-pointer text-xl font-semibold tracking-tight text-slate-900"
           onClick={() => router.push("/")}
         >
           CarPool
         </div>
 
-        {/* Desktop Menu */}
-
-        <ul className="hidden md:flex items-center gap-8 text-gray-700 font-medium">
-          <li
-            className="flex items-center gap-2 cursor-pointer hover:text-indigo-600"
-            onClick={() => router.push("/")}
-          >
+        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-700">
+          <button onClick={() => router.push("/")} className="flex items-center gap-2 hover:text-indigo-600 transition">
             <Home size={18} /> Home
-          </li>
-
-          <li
-            className="flex items-center gap-2 cursor-pointer hover:text-indigo-600"
-            onClick={() => router.push("/routes")}
-          >
+          </button>
+          <button onClick={() => router.push("/routes")} className="flex items-center gap-2 hover:text-indigo-600 transition">
             <Route size={18} /> Routes
-          </li>
-
-          <li className="flex items-center gap-2 cursor-pointer hover:text-indigo-600">
+          </button>
+          <button onClick={() => router.push("/message")} className="flex items-center gap-2 hover:text-indigo-600 transition">
             <MessageCircle size={18} /> Messages
-          </li>
-
-          <li className="flex items-center gap-2 cursor-pointer hover:text-indigo-600">
+          </button>
+          <button className="flex items-center gap-2 hover:text-indigo-600 transition">
             <Bell size={18} /> Notifications
-          </li>
-        </ul>
+          </button>
+        </nav>
 
-        {/* Right Side */}
-
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-3">
           <button
             onClick={() => router.push("/add-route")}
-            className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-1.5 rounded-lg hover:bg-indigo-700"
+            className="inline-flex items-center gap-2 rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-700"
           >
             <Plus size={16} />
             Post Ride
           </button>
 
-          <div className="flex items-center gap-2 cursor-pointer hover:text-red-500">
-            <LogOut size={18} />
-            Logout
-          </div>
+          <button
+            onClick={user ? handleLogout : () => router.push("/sign-in")}
+            className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:text-indigo-600"
+          >
+            {user ? <LogOut size={18} /> : <LogIn size={18} />}
+            {user ? "Logout" : "Login"}
+          </button>
         </div>
       </div>
-    </div>
+    </header>
   );
 }
 
