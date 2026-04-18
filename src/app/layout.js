@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
         <AppContextProvider>
           <Navbar />
 
-          <main className="flex-1 min-h-0 pb-24 md:pb-20 overflow-hidden">
+          <main className="flex-1 min-h-0 pb-24 md:pb-20 overflow-auto">
             {children}
           </main>
 

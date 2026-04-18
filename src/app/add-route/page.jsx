@@ -9,6 +9,7 @@ import {
   DollarSign,
   ArrowRight,
   Phone,
+  Car,
 } from "lucide-react";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -41,8 +42,8 @@ export default function RideForm() {
   return (
     <div className="min-h-screen bg-slate-50 py-10">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-6 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm md:grid-cols-[1.05fr_0.95fr]">
-          <div className="relative h-72 md:h-auto">
+        <div className="grid gap-6 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm md:grid-cols-[1.05fr_0.95fr] lg:overflow-hidden">
+          <div className="relative h-72 md:h-auto hidden md:block">
             <Image
               src="https://images.unsplash.com/photo-1503376780353-7e6692767b70"
               alt="carpool"
@@ -65,7 +66,7 @@ export default function RideForm() {
             </div>
           </div>
 
-          <div className="p-8 sm:p-10">
+          <div className="p-4 sm:p-8 lg:p-10">
             <div className="mb-6">
               <p className="text-sm uppercase tracking-[0.24em] text-indigo-600">
                 Create a ride
@@ -156,7 +157,7 @@ export default function RideForm() {
                   </span>
                 </label>
                 <input
-                  type="tel"
+                  type="text"
                   {...register("phone")}
                   placeholder="0300-1234567"
                   className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
@@ -164,7 +165,27 @@ export default function RideForm() {
               </div>
 
               <div className="sm:col-span-2">
-                <button className="w-full rounded-3xl bg-indigo-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700">
+                <label className="mb-2 block text-sm font-medium text-slate-700">
+                  <span className="inline-flex items-center gap-2">
+                    <Car size={16} /> Vehicle Type
+                  </span>
+                </label>
+                <select
+                  {...register("vehicle")}
+                  className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                >
+                  <option value="">Select vehicle type</option>
+                  <option value="Car">Car</option>
+                  <option value="Bike">Bike</option>
+                  <option value="Bus">Bus</option>
+                </select>
+              </div>
+
+              <div className="sm:col-span-2">
+                <button
+                  type="submit"
+                  className="w-full rounded-3xl bg-indigo-600 px-6 py-4 text-sm font-semibold text-white transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                >
                   Post Ride
                 </button>
               </div>

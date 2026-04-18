@@ -1,15 +1,23 @@
 import { ApiError } from "@/lib/ApiError";
 import { dbConnect } from "@/lib/dbconnect";
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { authOptions } from "../auth/[...nextauth]/option";
 import RouteModel from "@/models/routes.model";
 
 export async function POST(req) {
   try {
-    const { to, from, seats, price, time, phone, owner } = await req.json();
+    const { to, from, seats, price, time, phone, owner, vehicle } =
+      await req.json();
 
-    if (!to || !from || !seats || !price || !time || !phone || !owner) {
+    if (
+      !to ||
+      !from ||
+      !seats ||
+      !price ||
+      !time ||
+      !phone ||
+      !owner ||
+      !vehicle
+    ) {
       throw new ApiError("All feild are required", 404);
     }
     await dbConnect();
@@ -22,6 +30,7 @@ export async function POST(req) {
       time,
       phone,
       owner,
+      vehicle,
     });
     if (!addRoute) {
       throw new ApiError("failed to addroute in DB", 501);
@@ -30,6 +39,7 @@ export async function POST(req) {
       {
         success: true,
         message: " add route successfully",
+        addRoute,
         status: 201,
       },
       { status: 201 },

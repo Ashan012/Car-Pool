@@ -5,27 +5,39 @@ const RouteSchema = new Schema(
     to: {
       type: String,
       required: true,
+      trim: true,
     },
     from: {
       type: String,
       required: true,
+      trim: true,
     },
 
     time: {
-      type: Date,
+      type: String,
       required: true,
     },
+
     phone: {
-      type: Number,
+      type: String,
       required: true,
     },
+
     seats: {
       type: Number,
       required: true,
+      min: 1,
+      max: 8,
     },
+
     price: {
       type: Number,
       required: true,
+      min: 0,
+    },
+    vehicle: {
+      type: String,
+      enum: ["Bus", "Car", "Bike"],
     },
     owner: {
       type: mongoose.Types.ObjectId,

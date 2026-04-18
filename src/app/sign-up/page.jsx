@@ -11,17 +11,11 @@ export default function SignupForm() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (formData) => {
     try {
-      const response = await fetch("/api/sign-up", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const result = await response.json();
-
-      if (result) {
-        await LoginFunc(result?.username, result?.password);
+      const { data } = await axios.post("/api/sign-up", formData);
+      if (data) {
+        await LoginFunc(data?.username, data?.password);
       }
     } catch (error) {
       console.error(error?.message);
