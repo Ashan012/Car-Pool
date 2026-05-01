@@ -6,7 +6,9 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     await dbConnect();
-    const routes = await RouteModel.find();
+    const routes = await RouteModel.find()
+      .populate("owner")
+      .select("-password");
 
     if (!routes) {
       throw new ApiError("failed to fetch route in DB", 501);

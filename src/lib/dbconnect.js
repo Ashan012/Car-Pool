@@ -15,6 +15,6 @@ export async function dbConnect() {
   } catch (error) {
     console.error(error);
     console.log(`DB CONNECTION FAILED`);
-    process.exit(1);
+    // process.exit(1);
   }
 }

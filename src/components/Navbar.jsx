@@ -1,5 +1,13 @@
 "use client";
-import { Home, Route, MessageCircle, Bell, LogOut, Plus, LogIn } from "lucide-react";
+import {
+  Home,
+  Route,
+  MessageCircle,
+  Bell,
+  LogOut,
+  Plus,
+  LogIn,
+} from "lucide-react";
 import { useAppContext } from "@/context/AppContext";
 
 function Navbar() {
@@ -16,13 +24,22 @@ function Navbar() {
         </div>
 
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-700">
-          <button onClick={() => router.push("/")} className="flex items-center gap-2 hover:text-indigo-600 transition">
+          <button
+            onClick={() => router.push("/")}
+            className="flex items-center gap-2 hover:text-indigo-600 transition"
+          >
             <Home size={18} /> Home
           </button>
-          <button onClick={() => router.push("/routes")} className="flex items-center gap-2 hover:text-indigo-600 transition">
+          <button
+            onClick={() => router.push("/routes")}
+            className="flex items-center gap-2 hover:text-indigo-600 transition"
+          >
             <Route size={18} /> Routes
           </button>
-          <button onClick={() => router.push("/message")} className="flex items-center gap-2 hover:text-indigo-600 transition">
+          <button
+            onClick={() => router.push("/message/all-message")}
+            className="flex items-center gap-2 hover:text-indigo-600 transition"
+          >
             <MessageCircle size={18} /> Messages
           </button>
           <button className="flex items-center gap-2 hover:text-indigo-600 transition">

@@ -17,7 +17,7 @@ import { useAppContext } from "@/context/AppContext";
 
 export default function RideForm() {
   const { register, handleSubmit, reset } = useForm();
-  const { router, user } = useAppContext();
+  const { router, user, areaList } = useAppContext();
 
   const onSubmit = async (data) => {
     try {
@@ -89,11 +89,17 @@ export default function RideForm() {
                     <MapPin size={16} /> From
                   </span>
                 </label>
-                <input
-                  {...register("from")}
-                  placeholder="Surjani Town"
-                  className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
-                />
+
+                <select
+                  {...register("to")}
+                  className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none"
+                >
+                  {areaList.map((area, i) => (
+                    <option value={area} key={i}>
+                      {area}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="sm:col-span-2">
@@ -102,11 +108,16 @@ export default function RideForm() {
                     <ArrowRight size={16} /> To
                   </span>
                 </label>
-                <input
-                  {...register("to")}
-                  placeholder="Shahrah e Faisal"
-                  className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
-                />
+                <select
+                  {...register("from")}
+                  className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none"
+                >
+                  {areaList.reverse().map((area, i) => (
+                    <option value={area} key={i}>
+                      {area}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div>

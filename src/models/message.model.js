@@ -2,24 +2,24 @@ import mongoose, { Schema } from "mongoose";
 
 const messageSchema = new Schema(
   {
-    from: {
+    conversationId: {
       type: mongoose.Types.ObjectId,
-      ref: "User",
+      ref: "Conversation",
+      required: true,
     },
-    to: {
-      type: mongoose.Types.ObjectId,
-      ref: "User",
-    },
-    content: {
+
+    message: {
       type: String,
       required: true,
     },
+    senderId: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
-  {
-    timestamps: true,
-  },
+  { timestamps: true },
 );
-
 const messageModel =
   mongoose.models.Message || mongoose.model("Message", messageSchema);
 
